@@ -3,10 +3,12 @@
 
 #include "framework.h"
 #include "TESTwindowsApp.h"
+#include <string>
 
 #define MAX_LOADSTRING 100
 
 // Global Variables:
+int paintNum;                                   //Testing purposes added by ced
 HINSTANCE hInst;                                // current instance
 WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
@@ -26,6 +28,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     // TODO: Place code here.
+
+    paintNum = 0;
 
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -130,6 +134,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
+    //case WM_LBUTTONDOWN: Left click down event
+   
+        
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
@@ -148,10 +155,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_PAINT:
-        {
+        {   
+            paintNum++;
+            TCHAR buffer[1000];
+            _itot_s(paintNum, buffer, _countof(buffer), 10);
+
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
-            TCHAR greeting[] = _T("Hello, Windows desktop!");
+
+
+            TCHAR greeting[1000] = _T("Paint number: ");
+            lstrcat(greeting, buffer);
+
+
+
+
+
             // TODO: Add any drawing code that uses hdc here...
             TextOut(hdc,
                 400, 400,
